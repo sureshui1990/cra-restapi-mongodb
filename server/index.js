@@ -23,7 +23,7 @@ app.get('/', (req,res) => {
 // Mongoose connectivity
 mongoose.connect(process.env.DB_BASE_URL, {useNewUrlParser: true,useUnifiedTopology: true},() => {
     console.log('connected to DB');
-})
+});
 
 // Middleware
 app.use(express.json());

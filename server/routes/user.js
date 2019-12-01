@@ -7,24 +7,24 @@ const { registerValidation, loginValidation } = require('../validation');
 
 
 // Login
-router.get('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
     const { password, email } = req.body;
 
     // Validation error
     const { error } = loginValidation(req.body);
     if(error){
-        return res.status(400).send(error.details[0].message);
+        return res.status(400).json({status:'400',message: error.details[0].message});
     }
 
     const user = await User.findOne({email});
     if(!user){
-        return res.status(400).send('Email is not found');
+        return res.status(400).json({status:'400',message: 'Email is not found'});
     }
 
     const validPassword = await bcrypt.compare(password,user.password);
     
     if(!validPassword){
-        return res.status(400).send('Invalid password');
+        return res.status(400).json({status:'400',message: 'Invalid password'});
     }
 
     const token = jwt.sign({_id: user.id}, process.env.TOKEN_SECRET);

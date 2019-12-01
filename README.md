@@ -12,3 +12,8 @@ Nodejs, Express, MongodB
 Scheme validation - Hapi@joi
 Password Hashing - BcrptJs
 Authentication - JWT
+
+
+// ReferenceLink
+ //Folder structue
+  https://medium.com/javascript-in-plain-english/choosing-the-best-folder-structure-for-your-react-application-cba4885b3a2

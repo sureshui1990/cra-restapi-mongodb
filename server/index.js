@@ -33,4 +33,4 @@ app.use('/api/post', postRoutes);
 app.use('/api/user', userRoutes);
 
 // Listen the app with port
-app.listen(port, () => (console.log(`server running on ${port}`)));
+app.listen(port, () => (console.log(`server running on ${port}.`)));

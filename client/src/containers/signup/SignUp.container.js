@@ -61,6 +61,7 @@ export default class LoginContainer extends Component {
                             name="name"
                             className="form-control"
                             id="UsernameInput"
+                            value={name}
                             onChange={this.handleOnChange}
                             />
                         </div>
@@ -70,7 +71,7 @@ export default class LoginContainer extends Component {
                             type="text"
                             name="email"
                             className="form-control"
-                            id="UserEmailInput"
+                            value={email}
                             onChange={this.handleOnChange}
                             />
                         </div>
@@ -80,7 +81,7 @@ export default class LoginContainer extends Component {
                             type="password"
                             name="password"
                             className="form-control"
-                            id="PasswordInput"
+                            value={password}
                             onChange={this.handleOnChange}
                             />
                         </div>
@@ -90,7 +91,7 @@ export default class LoginContainer extends Component {
                             onClick={this.handleLoginSubmit}>Register</MDBBtn>
                         </div>
 
-                        <div>
+                        <div className="border border-info p-2 mt-3">
                         <Link to="/login">Already have an account?</Link>
                         </div>
                         </MDBCardBody>

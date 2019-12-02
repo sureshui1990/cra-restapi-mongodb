@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { MDBBtn, MDBCard, MDBCardBody, MDBInput, MDBCol } from 'mdbreact';
-
+import { useAuth } from '../../context/auth';
 
 export default class LoginContainer extends Component {
     constructor(props) {
@@ -11,6 +11,8 @@ export default class LoginContainer extends Component {
         this.state = {
              email: '',
              password:'',
+             isLoggedIn:false,
+             isError:false,
              loginResponse:{}
         }
     }
@@ -22,19 +24,19 @@ export default class LoginContainer extends Component {
 
     handleLoginSubmit = event => {
         event.preventDefault();
-        const { email, password } = this.state;
-        // const { history} = this.props;
-        this.setState({ error: false });
 
+        const { email, password } = this.state;
+        this.setState({ error: false });
         axios.post(`http://localhost:4949/api/user/login`, { email,password })
-      .then(res => {
+        .then(res => {
           if(res.status === 200){
-            //   this.props.history.push('/');
-            // this.setState({loginResponse:res});
+            this.setState({isLoggedIn:true,isError:false});
+            useAuth.setAuthTokens(res.data);
             console.log('res if',res);
-        }else{
+         }else{
             const error = new Error(res.error);
             console.log('res else');
+            this.setState({isError:true,isLoggedIn:false});
             throw error;
         }
       }).catch((error) => {
@@ -45,7 +47,14 @@ export default class LoginContainer extends Component {
 
     render() {
         console.log('this.state',this.state);
-        const { email, password } = this.state;
+        const { email, password ,isLoggedIn, isError } = this.state;
+
+        if(isError){
+           return  <div className="login-form-container">Error, something is wrong</div>;
+        }
+        if(isLoggedIn){
+            return <div className="login-form-container">Home page</div>;
+        }
         return (
             <React.Fragment>
               <div className="login-form-container">
@@ -60,6 +69,7 @@ export default class LoginContainer extends Component {
                             type="text"
                             name="email"
                             onChange={this.handleOnChange}
+                            value={email}
                             />
                         </div>
                         <div className="form-group">
@@ -69,6 +79,7 @@ export default class LoginContainer extends Component {
                             name="password"
                             className="form-control"
                             onChange={this.handleOnChange}
+                            value={password}
                             />
                         </div>
                         <div>
@@ -76,8 +87,8 @@ export default class LoginContainer extends Component {
                             color="primary"
                             onClick={this.handleLoginSubmit}>Login</MDBBtn>
                         </div>
-                        <div className="borter">
-                        <Link to="/signup">To Register</Link>
+                        <div className="border border-info p-2 mt-3">
+                        <Link to="/signup">Don't you have an account ?</Link>
                         </div>
                         </MDBCardBody>
                         </MDBCard>

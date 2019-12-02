@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { MDBBtn, MDBCard, MDBCardBody, MDBInput, MDBCol } from 'mdbreact';
 
-
 export default class LoginContainer extends Component {
     constructor(props) {
         super(props)
@@ -45,7 +44,9 @@ export default class LoginContainer extends Component {
 
     render() {
         console.log('this.state',this.state);
-        const { email, password } = this.state;
+        console.log('this.props',this.props);
+        const { name, email, password } = this.state;
+
         return (
             <React.Fragment>
               <div className="login-form-container">
@@ -53,31 +54,44 @@ export default class LoginContainer extends Component {
                 <MDBCol>
                 <MDBCard style={{ width: "22rem" }}>
                 <MDBCardBody>
-
                         <div className="form-group">
                             <MDBInput
-                            label="Username"
+                            label="Name"
                             type="text"
-                            name="email"
+                            name="name"
+                            className="form-control"
+                            id="UsernameInput"
                             onChange={this.handleOnChange}
                             />
                         </div>
                         <div className="form-group">
                             <MDBInput
-                            label='Password'
+                            label="Email"
+                            type="text"
+                            name="email"
+                            className="form-control"
+                            id="UserEmailInput"
+                            onChange={this.handleOnChange}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <MDBInput
+                            label="Password"
                             type="password"
                             name="password"
                             className="form-control"
+                            id="PasswordInput"
                             onChange={this.handleOnChange}
                             />
                         </div>
                         <div>
                             <MDBBtn type="button" 
-                            color="primary"
-                            onClick={this.handleLoginSubmit}>Login</MDBBtn>
+                            color="secondary    "
+                            onClick={this.handleLoginSubmit}>Register</MDBBtn>
                         </div>
-                        <div className="borter">
-                        <Link to="/signup">To Register</Link>
+
+                        <div>
+                        <Link to="/login">Already have an account?</Link>
                         </div>
                         </MDBCardBody>
                         </MDBCard>

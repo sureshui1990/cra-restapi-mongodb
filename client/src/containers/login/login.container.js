@@ -58,7 +58,6 @@ export default class LoginContainer extends Component {
                             type="password" margin="dense"
                             // variant="filled"
                             fullWidth
-                            required={true}
                             onChange={this.handleOnChange}
                             />
                             <div>

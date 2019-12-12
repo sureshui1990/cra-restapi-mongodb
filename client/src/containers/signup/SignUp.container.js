@@ -68,7 +68,6 @@ export default class LoginContainer extends Component {
                     type="mail" margin="dense"
                     // variant="filled"
                     size="small" fullWidth
-                    autoFocus={true} 
                     required={true}
                     onChange={this.handleOnChange}
                     />

@@ -1,14 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import './global/global.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-
-// MDBootstrap
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import "bootstrap-css-only/css/bootstrap.min.css";
-import "mdbreact/dist/css/mdb.css";
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

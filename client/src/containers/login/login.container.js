@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { MDBBtn } from "mdbreact";
+import { Grid, Button, TextField, Container,Card,CardContent } from '@material-ui/core';
+import { Login } from '../../utils/auth';
+
 
 export default class LoginContainer extends Component {
     constructor(props) {
@@ -17,7 +19,6 @@ export default class LoginContainer extends Component {
         console.log('e', event.target.value);
         this.setState({ [event.target.name] : event.target.value });
     }
-
     handleLoginSumbit = () => {
         const { email, password } = this.state;
         const reqBody = { email,password };
@@ -28,50 +29,50 @@ export default class LoginContainer extends Component {
         this.setState({loginResponse:error});
       });;
     };
+    userLogin = () => {
+        Login();
+        this.props.history.push('/dashboard');
+    }
 
     render() {
-        console.log('this.state',this.state);
-        const { email, password,loginResponse } = this.state;
-        const valMailPassword = email || password;
-
-        if(loginResponse.status === 200){
-            return <div>You have been logged successfully</div>
-        }
         return (
             <React.Fragment>
-              <div className="login-form-container">
-                <form>
-                    <div>
-                        <div className="form-group">
-                            <label htmlFor="UsernameInput">Username</label>
-                            <input
-                            type="text"
-                            name="email"
-                            className="form-control"
-                            id="UsernameInput"
+                <Container maxWidth="xs">
+                    <Card>
+                        <CardContent>
+                            <Grid container justify="center">
+                                <Grid item xs={12} sm={10}>
+                <form noValidate autoComplete="off">
+                      <TextField
+                            label="Username" 
+                            type="text" margin="dense"
+                            // variant="filled"
+                            size="small" fullWidth
+                            autoFocus={true} 
+                            required={true}
                             onChange={this.handleOnChange}
                             />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="PasswordInput">Password</label>
-                            <input
-                            type="password"
-                            name="password"
-                            className="form-control"
-                            id="PasswordInput"
+                        <TextField
+                            label="Password" 
+                            style={{margin:'1em 0'}}
+                            type="password" margin="dense"
+                            // variant="filled"
+                            fullWidth
+                            required={true}
                             onChange={this.handleOnChange}
                             />
+                            <div>
+                            <Button color="primary" fullWidth
+                            variant="contained" onClick={this.userLogin}
+                            type="button">Login</Button>
                         </div>
-                        <div>
-                            <MDBBtn type="button" 
-                            color="primary" 
-                            disabled={!valMailPassword}
-                            onClick={this.handleLoginSumbit}>Login</MDBBtn>
-                        </div>
-
-                    </div>    
+   
                 </form>    
-              </div>  
+                </Grid>
+                </Grid>
+                </CardContent>
+                    </Card>
+               </Container>
             </React.Fragment>
         )
     }

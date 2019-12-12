@@ -1,10 +1,13 @@
 import React from 'react';
+import { Container } from '@material-ui/core';
 
 export default () => {
     return (
-        <div>
+        <Container>
             <h3>Home page</h3>
+
+            <p>User can view the page</p>
             
-        </div>
+        </Container>
     )
 }

@@ -1,12 +1,5 @@
 
-header{
-    padding-top: 7em;
-}
-
 nav{
-    position: absolute;
-    width: 100%;
-    top: 0;
     & ul{
     display: flex;justify-content: center;
     align-content: center;
@@ -14,7 +7,6 @@ nav{
     background-color: #202020;
     margin: 0;padding: 0;
     font-size: .75em;
-    width: 100%;
     li{
         list-style-type: none;
         background-color: #202020;

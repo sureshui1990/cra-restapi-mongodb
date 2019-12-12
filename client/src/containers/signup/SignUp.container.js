@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { MDBBtn, MDBCard, MDBCardBody, MDBInput, MDBCol } from 'mdbreact';
+import { Grid, Button, TextField, Container,Card,CardContent } from '@material-ui/core';
 
 export default class LoginContainer extends Component {
     constructor(props) {
@@ -48,57 +48,52 @@ export default class LoginContainer extends Component {
         const { name, email, password } = this.state;
 
         return (
-            <React.Fragment>
-              <div className="login-form-container">
-                <form>
-                <MDBCol>
-                <MDBCard style={{ width: "22rem" }}>
-                <MDBCardBody>
-                        <div className="form-group">
-                            <MDBInput
-                            label="Name"
-                            type="text"
-                            name="name"
-                            className="form-control"
-                            id="UsernameInput"
-                            value={name}
-                            onChange={this.handleOnChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <MDBInput
-                            label="Email"
-                            type="text"
-                            name="email"
-                            className="form-control"
-                            value={email}
-                            onChange={this.handleOnChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <MDBInput
-                            label="Password"
-                            type="password"
-                            name="password"
-                            className="form-control"
-                            value={password}
-                            onChange={this.handleOnChange}
-                            />
-                        </div>
-                        <div>
-                            <MDBBtn type="button" 
-                            color="secondary    "
-                            onClick={this.handleLoginSubmit}>Register</MDBBtn>
-                        </div>
+            <React.Fragment> <Container maxWidth="xs">
+            <Card>
+                <CardContent>
+                    <Grid container justify="center">
+                        <Grid item xs={12} sm={10}>
+        <form noValidate autoComplete="off">
+        <TextField
+                    label="Name" 
+                    type="text" margin="dense"
+                    // variant="filled"
+                    size="small" fullWidth
+                    autoFocus={true} 
+                    required={true}
+                    onChange={this.handleOnChange}
+                    />
+              <TextField
+                    label="email" 
+                    type="mail" margin="dense"
+                    // variant="filled"
+                    size="small" fullWidth
+                    autoFocus={true} 
+                    required={true}
+                    onChange={this.handleOnChange}
+                    />
+                <TextField
+                    label="Password" 
+                    type="password" margin="dense"
+                    // variant="filled"
+                    fullWidth
+                    required={true}
+                    onChange={this.handleOnChange}
+                    />
+                    <div
+                    style={{margin:'1em 0'}}>
+                    <Button color="secondary" fullWidth
+                    variant="contained" onClick={this.userLogin}
+                    type="button">Register</Button>
+                </div>
+                <Link to="/login">Already have an account</Link>
 
-                        <div className="border border-info p-2 mt-3">
-                        <Link to="/login">Already have an account?</Link>
-                        </div>
-                        </MDBCardBody>
-                        </MDBCard>
-                        </MDBCol> 
-                </form>    
-              </div>  
+        </form>    
+        </Grid>
+        </Grid>
+        </CardContent>
+            </Card>
+       </Container>
             </React.Fragment>
         )
     }

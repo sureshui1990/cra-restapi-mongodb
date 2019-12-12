@@ -1,27 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Link, Route} from 'react-router-dom';
-import PrivateRoute from './PrivateRoute';
+import { BrowserRouter as Router, Link, Switch} from 'react-router-dom';
+import PrivateRoute from './main-routes/PrivateRoute';
+import PublicRoute from './main-routes/PublicRoute';
 import Home from './pages/Home';
-import Admin from './pages/Admin';
-import { AuthContext } from './context/auth';
+import Dashboard from './pages/Dashboard';
 import LoginContainer from './containers/login/Login.container';
 import SignUpContainer from './containers/signup/SignUp.container';
 
 
 const App =  () => {
 
-  const [ authTokens, setAuthTokens ] = useState();
-
-  const setTokens = (data) => {
-    localStorage.setItem("tokens", JSON.stringify(data));
-    setAuthTokens(data);
-  }
-
   return (
     <div className="App">
       <header className="App-header">
-        <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens}}>
       <Router>
           <nav>
           <ul>
@@ -35,17 +27,17 @@ const App =  () => {
             <Link to="/signup">Register</Link>
             </li>
             <li>
-            <Link to="/admin">Admin</Link>
+            <Link to="/dashboard">Dashboard</Link>
             </li>
           </ul>
           </nav>
-          <Route exact path="/" component={Home} />
-          <Route path="/login" component={LoginContainer} />
-          <Route path="/signup" component={SignUpContainer} />
-          <PrivateRoute path="/admin" component={Admin} />
+          <Switch>
+             <PublicRoute restricted={false} exact path="/" component={Home} />
+             <PublicRoute restricted={true} exact path="/login" component={LoginContainer} />
+             <PublicRoute restricted={true} exact path="/signup" component={SignUpContainer} />
+             <PrivateRoute exact path="/dashboard" component={Dashboard} />
+          </Switch>
         </Router>
-        </AuthContext.Provider>
-        {/* <LoginContainer /> */}
         
       </header>
     </div>

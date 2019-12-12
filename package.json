@@ -21,7 +21,6 @@
   },
   "homepage": "https://github.com/sureshui1990/cra-restapi-mongodb#readme",
   "dependencies": {
-    "concurrently": "^5.0.0",
-    "mdbreact": "^4.23.0"
+    "concurrently": "^5.0.0"
   }
 }

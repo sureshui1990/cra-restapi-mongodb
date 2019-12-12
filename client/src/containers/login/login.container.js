@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Link, Redirect } from 'react-router-dom';
-import { MDBBtn, MDBCard, MDBCardBody, MDBInput, MDBCol } from 'mdbreact';
-import { useAuth } from '../../context/auth';
+import { MDBBtn } from "mdbreact";
 
 export default class LoginContainer extends Component {
     constructor(props) {
@@ -11,8 +9,6 @@ export default class LoginContainer extends Component {
         this.state = {
              email: '',
              password:'',
-             isLoggedIn:false,
-             isError:false,
              loginResponse:{}
         }
     }
@@ -22,77 +18,58 @@ export default class LoginContainer extends Component {
         this.setState({ [event.target.name] : event.target.value });
     }
 
-    handleLoginSubmit = event => {
-        event.preventDefault();
-
+    handleLoginSumbit = () => {
         const { email, password } = this.state;
-        this.setState({ error: false });
-        axios.post(`http://localhost:4949/api/user/login`, { email,password })
-        .then(res => {
-          if(res.status === 200){
-            this.setState({isLoggedIn:true,isError:false});
-            useAuth.setAuthTokens(res.data);
-            console.log('res if',res);
-         }else{
-            const error = new Error(res.error);
-            console.log('res else');
-            this.setState({isError:true,isLoggedIn:false});
-            throw error;
-        }
+        const reqBody = { email,password };
+        axios.post(`http://localhost:4949/api/user/login`, reqBody)
+      .then(res => {
+        this.setState({loginResponse:res});
       }).catch((error) => {
         this.setState({loginResponse:error});
-        console.log('catch');
       });;
     };
 
     render() {
         console.log('this.state',this.state);
-        const { email, password ,isLoggedIn, isError } = this.state;
+        const { email, password,loginResponse } = this.state;
+        const valMailPassword = email || password;
 
-        if(isError){
-           return  <div className="login-form-container">Error, something is wrong</div>;
-        }
-        if(isLoggedIn){
-            return <div className="login-form-container">Home page</div>;
+        if(loginResponse.status === 200){
+            return <div>You have been logged successfully</div>
         }
         return (
             <React.Fragment>
               <div className="login-form-container">
                 <form>
-                <MDBCol>
-                <MDBCard style={{ width: "22rem" }}>
-                <MDBCardBody>
-
+                    <div>
                         <div className="form-group">
-                            <MDBInput
-                            label="Username"
+                            <label htmlFor="UsernameInput">Username</label>
+                            <input
                             type="text"
                             name="email"
+                            className="form-control"
+                            id="UsernameInput"
                             onChange={this.handleOnChange}
-                            value={email}
                             />
                         </div>
                         <div className="form-group">
-                            <MDBInput
-                            label='Password'
+                            <label htmlFor="PasswordInput">Password</label>
+                            <input
                             type="password"
                             name="password"
                             className="form-control"
+                            id="PasswordInput"
                             onChange={this.handleOnChange}
-                            value={password}
                             />
                         </div>
                         <div>
                             <MDBBtn type="button" 
-                            color="primary"
-                            onClick={this.handleLoginSubmit}>Login</MDBBtn>
+                            color="primary" 
+                            disabled={!valMailPassword}
+                            onClick={this.handleLoginSumbit}>Login</MDBBtn>
                         </div>
-                        <div className="border border-info p-2 mt-3">
-                        <Link to="/signup">Don't you have an account ?</Link>
-                        </div>
-                        </MDBCardBody>
-                        </MDBCard>
-                        </MDBCol> 
+
+                    </div>    
                 </form>    
               </div>  
             </React.Fragment>

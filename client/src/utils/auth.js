@@ -1,7 +1,7 @@
 const AuthToken = 'jwt';
 
-export const Login = () => {
-  localStorage.setItem(AuthToken, 'test@123');
+export const Login = (token) => {
+  localStorage.setItem(AuthToken, token);
 }
 
 export const Logout = () => {

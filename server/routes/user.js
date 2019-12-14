@@ -13,22 +13,22 @@ router.post('/login', async (req, res) => {
     // Validation error
     const { error } = loginValidation(req.body);
     if(error){
-        return res.status(400).json({status:'400',message: error.details[0].message});
+        return res.status(400).json({status:'400',message: error.details[0].message,formateError:true});
     }
 
     const user = await User.findOne({email});
     if(!user){
-        return res.status(400).json({status:'400',message: 'Email is not found'});
+        return res.status(400).json({status:'400',message: 'Email is not found',emailError: true});
     }
 
     const validPassword = await bcrypt.compare(password,user.password);
     
     if(!validPassword){
-        return res.status(400).json({status:'400',message: 'Invalid password'});
+        return res.status(400).json({status:'400',message: 'Invalid password',passwordError: true});
     }
 
     const token = jwt.sign({_id: user.id}, process.env.TOKEN_SECRET);
-    res.header('auth-token',token).status(200).send(token);
+    res.header('auth-token',token).status(200).json({'auth-token':token,message:'Login successfully'});
 });
 
 //  Submit all user data
@@ -38,13 +38,13 @@ router.post('/register', async (req, res) => {
     // Validation error
     const { error } = registerValidation(req.body);
     if(error){
-        return res.status(400).send(error.details[0].message);
+        return res.status(400).json({status:'400',message: error.details[0].message,formateError:true});
     }
     
     // An exist email handle
     const existedUser = await User.findOne({email});
     if(existedUser){
-        return res.status(400).send('Email already existed');
+        return res.status(400).json({status:'400',message:'Email already existed',mailExist:true});
     }
 
     // Hashed password
@@ -59,7 +59,7 @@ router.post('/register', async (req, res) => {
 
     try{
         const savedUser = await user.save();
-        res.json({user:savedUser._id});
+        res.json({uniqueId:savedUser._id,successMessage:'Registered Successfully'});
     }catch(err){
         res.status(400).json({message: err})
     }

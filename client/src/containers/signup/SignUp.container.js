@@ -8,44 +8,45 @@ export default class LoginContainer extends Component {
         super(props)
     
         this.state = {
+             name:'',
              email: '',
              password:'',
-             loginResponse:{}
+             error:false,
+             success:false
         }
     }
     
     handleOnChange = event => {
-        console.log('e', event.target.value);
         this.setState({ [event.target.name] : event.target.value });
     }
 
+    registerApiCall = () => {
+        const { email, password,name } = this.state;
+        axios.post(`http://localhost:4949/api/user/register`, { email,password,name })
+        .then(response => {
+            this.setState({success:response.data},() =>this.resetFormData);
+          }).catch((error) => {
+              if(error){
+                  this.setState({error:error.response.data});
+              }
+         });
+    }
+    resetFormData = () => {
+        this.setState({name:'',password:'',email:''})
+    }
     handleLoginSubmit = event => {
         event.preventDefault();
-        const { email, password } = this.state;
-        // const { history} = this.props;
-        this.setState({ error: false });
-
-        axios.post(`http://localhost:4949/api/user/login`, { email,password })
-      .then(res => {
-          if(res.status === 200){
-            //   this.props.history.push('/');
-            // this.setState({loginResponse:res});
-            console.log('res if',res);
-        }else{
-            const error = new Error(res.error);
-            console.log('res else');
-            throw error;
-        }
-      }).catch((error) => {
-        this.setState({loginResponse:error});
-        console.log('catch');
-      });;
+        this.registerApiCall();
     };
 
     render() {
+        
+        const {name,email,password,error,success } = this.state;
+        const isSubmitDisable = (name === '') ||(email === "") || (password === "");
         console.log('this.state',this.state);
-        console.log('this.props',this.props);
-        const { name, email, password } = this.state;
+        
+        const { formateError,message,mailExist } = error;
+        const { uniqueId,successMessage } = success;
 
         return (
             <React.Fragment> <Container maxWidth="xs">
@@ -57,34 +58,42 @@ export default class LoginContainer extends Component {
         <TextField
                     label="Name" 
                     type="text" margin="dense"
-                    // variant="filled"
+                    name="name"
                     size="small" fullWidth
                     autoFocus={true} 
+                    value={name}
                     required={true}
                     onChange={this.handleOnChange}
                     />
               <TextField
-                    label="email" 
+                    label="Email" 
                     type="mail" margin="dense"
-                    // variant="filled"
+                    name="email"
                     size="small" fullWidth
                     required={true}
+                    value={email}
                     onChange={this.handleOnChange}
+                    error={mailExist}
+                    helperText={mailExist && `${message}`}
                     />
                 <TextField
                     label="Password" 
                     type="password" margin="dense"
-                    // variant="filled"
+                    name="password"
                     fullWidth
                     required={true}
+                    value={password}
                     onChange={this.handleOnChange}
                     />
                     <div
                     style={{margin:'1em 0'}}>
                     <Button color="secondary" fullWidth
-                    variant="contained" onClick={this.userLogin}
+                    disabled={isSubmitDisable}
+                    variant="contained" onClick={this.handleLoginSubmit}
                     type="button">Register</Button>
                 </div>
+                {formateError && <p>{message}</p>}
+                {success && <p>{`${successMessage}. User unique-id is ${uniqueId}`}</p>}
                 <Link to="/login">Already have an account</Link>
 
         </form>    

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Grid, Button, TextField, Container,Card,CardContent } from '@material-ui/core';
+import {red} from '@material-ui/core/colors';
 import { Login } from '../../utils/auth';
 
+const err = red.A700;
 
 export default class LoginContainer extends Component {
     constructor(props) {
@@ -11,30 +13,35 @@ export default class LoginContainer extends Component {
         this.state = {
              email: '',
              password:'',
-             loginResponse:{}
+             error:false
         }
     }
     
     handleOnChange = event => {
-        console.log('e', event.target.value);
         this.setState({ [event.target.name] : event.target.value });
     }
     handleLoginSumbit = () => {
         const { email, password } = this.state;
         const reqBody = { email,password };
         axios.post(`http://localhost:4949/api/user/login`, reqBody)
-      .then(res => {
-        this.setState({loginResponse:res});
+      .then(response => {
+        this.setState({success:response}, ()=>this.userLogin(response.data["auth-token"]));
       }).catch((error) => {
-        this.setState({loginResponse:error});
+        if(error){
+            this.setState({error:error.response.data});
+        }
       });;
     };
-    userLogin = () => {
-        Login();
+    userLogin = (token) => {
+        Login(token);
         this.props.history.push('/dashboard');
     }
-
     render() {
+        const {email,password,error } = this.state;
+        const isSubmitDisable = (email === "") || (password === "");
+        console.log('this.state',this.state);
+        const {formateError,emailError,passwordError,message } = error;
+
         return (
             <React.Fragment>
                 <Container maxWidth="xs">
@@ -44,27 +51,31 @@ export default class LoginContainer extends Component {
                                 <Grid item xs={12} sm={10}>
                 <form noValidate autoComplete="off">
                       <TextField
-                            label="Username" 
-                            type="text" margin="dense"
-                            // variant="filled"
+                            label="Email" type="text" margin="dense"
                             size="small" fullWidth
-                            autoFocus={true} 
-                            required={true}
+                            autoFocus={true} name="email"
+                            required={true} value={email}
                             onChange={this.handleOnChange}
+                            error={emailError}
+                            helperText={emailError && `${message}`}
                             />
                         <TextField
-                            label="Password" 
-                            style={{margin:'1em 0'}}
+                            label="Password" style={{margin:'1em 0'}}
                             type="password" margin="dense"
-                            // variant="filled"
-                            fullWidth
-                            onChange={this.handleOnChange}
+                            fullWidth name="password" value={password}
+                            onChange={this.handleOnChange}                        
+                            error={passwordError}
+                            helperText={passwordError && `${message}`}
                             />
                             <div>
-                            <Button color="primary" fullWidth
-                            variant="contained" onClick={this.userLogin}
+                            <Button color="primary"
+                            disabled={isSubmitDisable}
+                            fullWidth
+                            variant="contained" onClick={this.handleLoginSumbit}
                             type="button">Login</Button>
                         </div>
+
+                        {formateError && <p style={{color:err}}>{message}</p>}
    
                 </form>    
                 </Grid>

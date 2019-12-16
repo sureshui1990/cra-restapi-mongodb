@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Grid, Button, TextField, Container,Card,CardContent } from '@material-ui/core';
+import { Grid, Button, TextField, Container,Card,CardContent,Typography } from '@material-ui/core';
+import AccountTreeIcon from '@material-ui/icons/AccountTree';
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
+
 
 export default class LoginContainer extends Component {
     constructor(props) {
@@ -24,10 +27,10 @@ export default class LoginContainer extends Component {
         const { email, password,name } = this.state;
         axios.post(`http://localhost:4949/api/user/register`, { email,password,name })
         .then(response => {
-            this.setState({success:response.data},() =>this.resetFormData);
+            this.setState({success:response.data,error:false},() => () =>this.resetFormData);
           }).catch((error) => {
               if(error){
-                  this.setState({error:error.response.data});
+                  this.setState({error:error.response.data,success:false});
               }
          });
     }
@@ -90,11 +93,17 @@ export default class LoginContainer extends Component {
                     <Button color="secondary" fullWidth
                     disabled={isSubmitDisable}
                     variant="contained" onClick={this.handleLoginSubmit}
-                    type="button">Register</Button>
+                    type="button">
+                        <GroupAddIcon />
+                        Register</Button>
                 </div>
                 {formateError && <p>{message}</p>}
                 {success && <p>{`${successMessage}. User unique-id is ${uniqueId}`}</p>}
-                <Link to="/login">Already have an account</Link>
+               <Typography aligncenter="center" align="center" justify="center" component="div">
+               <Link to="/login">
+                    <AccountTreeIcon />
+                    Already have an account</Link>
+                    </Typography>
 
         </form>    
         </Grid>

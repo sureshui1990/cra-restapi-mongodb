@@ -1,13 +1,22 @@
 import React from 'react';
-import { Container } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import { Container,Typography } from '@material-ui/core';
 
-export default () => {
+const Home = () => {
     return (
         <Container>
-            <h3>Home page</h3>
+            <Typography variant='inherit' component="h2" align='center'>
+            Welcome to the application
+            </Typography>
 
-            <p>User can view the page</p>
+            <Typography variant='inherit' component="p" align='center'>
+                Public page where anauthenticated user can view this page.
+            </Typography>
+            <Typography variant='inherit' component="div" align='center'>
+             <Link to="/dashboard">Dashboard</Link>
+            </Typography>
             
         </Container>
     )
-}
+};
+export default Home;

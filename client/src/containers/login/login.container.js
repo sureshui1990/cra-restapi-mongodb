@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Grid, Button, TextField, Container,Card,CardContent } from '@material-ui/core';
+import { Grid, Button, TextField, Container,Card,CardContent,Typography  } from '@material-ui/core';
 import {red} from '@material-ui/core/colors';
 import { Login } from '../../utils/auth';
+import { Link } from 'react-router-dom';
+import InputIcon from '@material-ui/icons/Input';
+import CreateIcon from '@material-ui/icons/Create';
+
+
 
 const err = red.A700;
 
@@ -26,11 +31,9 @@ export default class LoginContainer extends Component {
         axios.post(`http://localhost:4949/api/user/login`, reqBody)
       .then(response => {
         this.setState({success:response}, ()=>this.userLogin(response.data["auth-token"]));
-      }).catch((error) => {
-        if(error){
+      },(error) => {
             this.setState({error:error.response.data});
-        }
-      });;
+      })
     };
     userLogin = (token) => {
         Login(token);
@@ -39,7 +42,7 @@ export default class LoginContainer extends Component {
     render() {
         const {email,password,error } = this.state;
         const isSubmitDisable = (email === "") || (password === "");
-        console.log('this.state',this.state);
+        // console.log('this.state',this.state);
         const {formateError,emailError,passwordError,message } = error;
 
         return (
@@ -47,9 +50,9 @@ export default class LoginContainer extends Component {
                 <Container maxWidth="xs">
                     <Card>
                         <CardContent>
-                            <Grid container justify="center">
-                                <Grid item xs={12} sm={10}>
-                <form noValidate autoComplete="off">
+                         <Grid container justify="center">
+                            <Grid item xs={12} sm={10}>
+                    <form noValidate autoComplete="off">
                       <TextField
                             label="Email" type="text" margin="dense"
                             size="small" fullWidth
@@ -72,11 +75,19 @@ export default class LoginContainer extends Component {
                             disabled={isSubmitDisable}
                             fullWidth
                             variant="contained" onClick={this.handleLoginSumbit}
-                            type="button">Login</Button>
+                            type="button">
+                                <InputIcon />
+                                Login</Button>
                         </div>
 
                         {formateError && <p style={{color:err}}>{message}</p>}
-   
+                        <Typography variant='inherit' component="div"
+                         align='center'
+                        >
+                         <Link to="/signup">
+                             <CreateIcon />
+                             Register as a new user</Link>
+                        </Typography>
                 </form>    
                 </Grid>
                 </Grid>

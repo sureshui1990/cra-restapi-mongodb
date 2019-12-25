@@ -47,6 +47,7 @@ export default class LoginContainer extends Component {
 
         return (
             <React.Fragment>
+                <main className="main">
                 <Container maxWidth="xs">
                     <Card>
                         <CardContent>
@@ -94,6 +95,7 @@ export default class LoginContainer extends Component {
                 </CardContent>
                     </Card>
                </Container>
+               </main>
             </React.Fragment>
         )
     }

@@ -4,7 +4,7 @@ import { Container,Typography } from '@material-ui/core';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 
 const NoMatch = ({location}) => {
-    return <React.Fragment>
+    return <main className="main">
         <Container>
         <Typography variant='inherit' component="h3" align='center'>
             No match for <code>{location.pathname}</code>
@@ -13,6 +13,6 @@ const NoMatch = ({location}) => {
              <Link to="/dashboard"> <DashboardIcon /> Dashboard</Link>
          </Typography>
         </Container>
-    </React.Fragment>
+    </main>
 };
 export default NoMatch;

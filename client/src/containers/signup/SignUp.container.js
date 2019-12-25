@@ -52,12 +52,13 @@ export default class LoginContainer extends Component {
         const { uniqueId,successMessage } = success;
 
         return (
-            <React.Fragment> <Container maxWidth="xs">
-            <Card>
-                <CardContent>
+            <main className="main">
+                <Container maxWidth="xs">
+                    <Card>
+                    <CardContent>
                     <Grid container justify="center">
                         <Grid item xs={12} sm={10}>
-        <form noValidate autoComplete="off">
+         <form noValidate autoComplete="off">
         <TextField
                     label="Name" 
                     type="text" margin="dense"
@@ -111,7 +112,7 @@ export default class LoginContainer extends Component {
         </CardContent>
             </Card>
        </Container>
-            </React.Fragment>
+            </main>
         )
     }
 }

@@ -13,28 +13,8 @@ import NoMatch from './pages/NoMatch';
 const App =  () => {
 
   return (
-    <header>
+    <section>
       <Router>
-          {/* <nav>
-          <ul>
-            <li>
-            <Link to="/">Home</Link>
-            </li>
-            <li>
-            <Link to="/login">Login</Link>
-            </li>
-            <li>
-            <Link to="/signup">Register</Link>
-            </li>
-            <li>
-            <Link to="/dashboard">Dashboard</Link>
-            </li>
-            
-            <li>
-            <Link to="/user">User</Link>
-            </li>
-          </ul>
-          </nav> */}
           <Switch>
              <PublicRoute restricted={false} exact path="/" component={Home} />
              <PublicRoute restricted={true} exact path="/login" component={LoginContainer} />
@@ -44,7 +24,7 @@ const App =  () => {
              <PrivateRoute exact component={NoMatch} />
           </Switch>
         </Router>
-      </header>
+      </section>
   );
 }
 

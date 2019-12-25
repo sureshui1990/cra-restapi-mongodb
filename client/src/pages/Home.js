@@ -4,6 +4,7 @@ import { Container,Typography } from '@material-ui/core';
 
 const Home = () => {
     return (
+        <main className="main">
         <Container>
             <Typography variant='inherit' component="h2" align='center'>
             Welcome to the application
@@ -17,6 +18,7 @@ const Home = () => {
             </Typography>
             
         </Container>
+        </main>
     )
 };
 export default Home;

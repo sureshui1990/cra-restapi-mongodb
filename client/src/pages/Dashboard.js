@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import UserList from './UserList';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -83,6 +84,7 @@ export default (props) => {
             >
                 <Link to="/user">User list</Link>
             </Button>
+                <UserList ></UserList>
             
 
         </Container>

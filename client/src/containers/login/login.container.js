@@ -42,7 +42,6 @@ export default class LoginContainer extends Component {
     render() {
         const {email,password,error } = this.state;
         const isSubmitDisable = (email === "") || (password === "");
-        // console.log('this.state',this.state);
         const {formateError,emailError,passwordError,message } = error;
 
         return (

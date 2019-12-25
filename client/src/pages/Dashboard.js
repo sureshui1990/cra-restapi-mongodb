@@ -8,6 +8,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import UserList from './UserList';
+import Drawer from '../containers/drawer/Drawer.container';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -29,6 +30,9 @@ export default (props) => {
         Logout();
         props.history.push('/login');
     }
+    const ShowDrawerBar = () => {
+      console.log('ss');
+    }
     const handleMenu = event => {
         setProfileMenu(event.currentTarget)
     }
@@ -38,9 +42,7 @@ export default (props) => {
     return (<>
     <AppBar position="static">
     <Toolbar>
-        <IconButton edge="start" color="inherit" aria-label="menu">
-            <MenuIcon ></MenuIcon>
-        </IconButton>
+    <Drawer />
     <Typography variant="h6" className={classes.title} >
             Menus
           </Typography>
@@ -78,6 +80,8 @@ export default (props) => {
 
     <section>
         <Container>
+
+          
 
             <Button color="primary"
             variant="outlined"

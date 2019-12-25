@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
-import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import UserList from './UserList';
 import Drawer from '../containers/drawer/Drawer.container';
@@ -28,10 +27,6 @@ export default (props) => {
     const isOpen = Boolean(profileMenu);
     const logout = () => {
         Logout();
-        props.history.push('/login');
-    }
-    const ShowDrawerBar = () => {
-      console.log('ss');
     }
     const handleMenu = event => {
         setProfileMenu(event.currentTarget)
@@ -80,15 +75,10 @@ export default (props) => {
 
     <section>
         <Container>
-
-          
-
-            <Button color="primary"
-            variant="outlined"
-            >
-                <Link to="/user">User list</Link>
+            <Button color="primary" variant="outlined" ><Link to="/user">User list</Link>
             </Button>
-                <UserList ></UserList>
+            
+            <UserList ></UserList>
             
 
         </Container>

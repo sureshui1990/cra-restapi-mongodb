@@ -9,12 +9,13 @@ import User from './pages/User';
 import LoginContainer from './containers/login/Login.container';
 import SignUpContainer from './containers/signup/SignUp.container';
 import NoMatch from './pages/NoMatch';
+import history from './utils/history';
 
 const App =  () => {
 
   return (
     <section>
-      <Router>
+      <Router history={history}>
           <Switch>
              <PublicRoute restricted={false} exact path="/" component={Home} />
              <PublicRoute restricted={true} exact path="/login" component={LoginContainer} />

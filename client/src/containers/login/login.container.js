@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Grid, Button, TextField, Container,Card,CardContent,Typography  } from '@material-ui/core';
-import {red} from '@material-ui/core/colors';
 import { Login } from '../../utils/auth';
 import { Link } from 'react-router-dom';
 import InputIcon from '@material-ui/icons/Input';
 import CreateIcon from '@material-ui/icons/Create';
+import { connect } from 'react-redux';
+import { LoginUrl } from '../../constants';
+import { LOGIN } from '../../actions/User';
 
 
-
-const err = red.A700;
-
-export default class LoginContainer extends Component {
+class LoginContainer extends Component {
     constructor(props) {
-        super(props)
-    
+        super(props);
         this.state = {
              email: '',
              password:'',
@@ -27,23 +25,26 @@ export default class LoginContainer extends Component {
     }
     handleLoginSumbit = () => {
         const { email, password } = this.state;
+        const { login } = this.props;
         const reqBody = { email,password };
-        axios.post(`http://localhost:4949/api/user/login`, reqBody)
+        axios.post(LoginUrl, reqBody)
       .then(response => {
-        this.setState({success:response}, ()=>this.userLogin(response.data["auth-token"]));
+        this.setState({success:response}, ()=>{
+            this.userLogin(response.data["auth-token"]);
+            login(response.data);
+        });
       },(error) => {
             this.setState({error:error.response.data});
       })
     };
     userLogin = (token) => {
         Login(token);
-        this.props.history.push('/dashboard');
     }
     render() {
         const {email,password,error } = this.state;
         const isSubmitDisable = (email === "") || (password === "");
         const {formateError,emailError,passwordError,message } = error;
-
+        
         return (
             <React.Fragment>
                 <main className="main">
@@ -80,7 +81,7 @@ export default class LoginContainer extends Component {
                                 Login</Button>
                         </div>
 
-                        {formateError && <p style={{color:err}}>{message}</p>}
+                        {formateError && <p style={{color:'#c00'}}>{message}</p>}
                         <Typography variant='inherit' component="div"
                          align='center'
                         >
@@ -99,3 +100,17 @@ export default class LoginContainer extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {
+      counter: state.Counter
+    }
+};
+  
+const mapDispatchToProps = dispatch => {
+    return {
+        login: (data) => dispatch(LOGIN(data))
+    }
+ };
+
+export default connect(mapStateToProps, mapDispatchToProps) (LoginContainer);

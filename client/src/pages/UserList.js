@@ -8,23 +8,18 @@ import { getAuthToken } from '../utils/auth.js';
 
 export default class UserList extends Component {
     constructor(props) {
-        super(props)
-    
+        super(props);
         this.state = {
             list:[]
         }
     }
     
-    
     getUserList = () => {
-
         axios.get(`http://localhost:4949/api/user`, {headers: {'auth-token':getAuthToken() }})
       .then(response => {
-          console.log('response',response);
         this.setState({list:response.data});
       }).catch((error) => {
         if(error){
-            console.log('error',error);
             this.setState({error:error.response.data});
         }
       });;

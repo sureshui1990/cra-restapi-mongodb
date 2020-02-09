@@ -14,7 +14,7 @@ const NoMatch = ({location}) => {
             No match for <code>{location.pathname}</code>
          </Typography>
          <Typography variant='inherit' component="div" align='center'>
-             <Link to="/dashboard"> <DashboardIcon /> Dashboard</Link>
+             <Link to="/main"> <DashboardIcon /> Dashboard</Link>
          </Typography>
         </Container>
     </main>

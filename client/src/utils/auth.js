@@ -1,6 +1,5 @@
 import History from './history';
 
-
 const AuthToken = 'jwt';
 
 export const Login = (token) => {

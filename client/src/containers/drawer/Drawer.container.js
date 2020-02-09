@@ -7,12 +7,12 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import { Logout } from '../../utils/auth';
+import { Link } from 'react-router-dom';
 
 
 const useStyles = makeStyles({
@@ -41,13 +41,15 @@ export default function MenuDrawer() {
       onClick={toggleDrawer()}
       onKeyDown={toggleDrawer()}
     >
-      <List>
-        {['User list', 'New User', 'Edit user'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+      <List to="">
+      
+      <Link to='Userlist'>
+      <ListItem button>
+            <ListItemIcon><InboxIcon /></ListItemIcon>
+            <ListItemText primary='User list' />
+      </ListItem>
+      </Link>
+
       </List>
       <Divider />
       <List>

@@ -5,6 +5,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import FolderIcon from '@material-ui/icons/Folder';
 import axios from 'axios';
 import { getAuthToken } from '../utils/auth.js';
+import { getUserListUrl } from '../constants';
 
 export default class UserList extends Component {
     constructor(props) {
@@ -13,9 +14,10 @@ export default class UserList extends Component {
             list:[]
         }
     }
-    
+
     getUserList = () => {
-        axios.get(`http://localhost:4949/api/user`, {headers: {'auth-token':getAuthToken() }})
+
+        axios.get( getUserListUrl, {headers: {'auth-token':getAuthToken() }})
       .then(response => {
         this.setState({list:response.data});
       }).catch((error) => {
@@ -36,8 +38,7 @@ export default class UserList extends Component {
                         <CardContent>
                             <Grid container justify="center">
                                 <Grid item xs={12} sm={10}>
-                                <List>
-                                    
+                                    <List>
                                         {list && list.map( user => {
                                             return <ListItem key={user._id}>
                                                     <ListItemIcon>

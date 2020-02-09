@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Grid, Button, TextField, Container,Card,CardContent,Typography } from '@material-ui/core';
 import AccountTreeIcon from '@material-ui/icons/AccountTree';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
-
+import { UserRegisterUrl } from '../../constants';
 
 export default class LoginContainer extends Component {
     constructor(props) {
@@ -25,7 +25,7 @@ export default class LoginContainer extends Component {
 
     registerApiCall = () => {
         const { email, password,name } = this.state;
-        axios.post(`http://localhost:4949/api/user/register`, { email,password,name })
+        axios.post( UserRegisterUrl , { email,password,name })
         .then(response => {
             this.setState({success:response.data,error:false},() => () =>this.resetFormData);
           }).catch((error) => {
@@ -46,7 +46,6 @@ export default class LoginContainer extends Component {
         
         const {name,email,password,error,success } = this.state;
         const isSubmitDisable = (name === '') ||(email === "") || (password === "");
-        console.log('this.state',this.state);
         
         const { formateError,message,mailExist } = error;
         const { uniqueId,successMessage } = success;

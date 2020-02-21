@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Grid, Button, TextField, Container,Card,CardContent,Typography } from '@material-ui/core';
-import AccountTreeIcon from '@material-ui/icons/AccountTree';
-import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import { Container, Grid,Segment, Button,Form, Message } from 'semantic-ui-react';
 import { UserRegisterUrl } from '../../constants';
 
 export default class LoginContainer extends Component {
@@ -47,69 +45,58 @@ export default class LoginContainer extends Component {
         const {name,email,password,error,success } = this.state;
         const isSubmitDisable = (name === '') ||(email === "") || (password === "");
         
-        const { formateError,message,mailExist } = error;
+        const { formateError,message } = error;
         const { uniqueId,successMessage } = success;
 
         return (
             <main className="main">
-                <Container maxWidth="xs">
-                    <Card>
-                    <CardContent>
-                    <Grid container justify="center">
-                        <Grid item xs={12} sm={10}>
-         <form noValidate autoComplete="off">
-        <TextField
-                    label="Name" 
-                    type="text" margin="dense"
-                    name="name"
-                    size="small" fullWidth
-                    autoFocus={true} 
-                    value={name}
-                    required={true}
+                <Container>
+                <Grid columns={3} centered>
+                         <Grid.Column>
+                         <Segment>
+                         <Form noValidate autoComplete="off">
+                    <Form.Field>
+                        <label>Name</label>
+                        <input type="text"
+                    name="name" size="small"  
+                    value={name} onChange={this.handleOnChange}
+                    />
+                    </Form.Field>
+                    <Form.Field>
+                    <label>Email</label>
+                    <input type="text"
+                    name="email" size="small" 
+                     value={email}
                     onChange={this.handleOnChange}
                     />
-              <TextField
-                    label="Email" 
-                    type="mail" margin="dense"
-                    name="email"
-                    size="small" fullWidth
-                    required={true}
-                    value={email}
-                    onChange={this.handleOnChange}
-                    error={mailExist}
-                    helperText={mailExist && `${message}`}
-                    />
-                <TextField
+                    </Form.Field>
+                    <Form.Field>
+                    <label>Password</label>
+                <input
                     label="Password" 
-                    type="password" margin="dense"
+                    type="password"
                     name="password"
-                    fullWidth
-                    required={true}
                     value={password}
                     onChange={this.handleOnChange}
                     />
+                    </Form.Field>
                     <div
                     style={{margin:'1em 0'}}>
-                    <Button color="secondary" fullWidth
-                    disabled={isSubmitDisable}
-                    variant="contained" onClick={this.handleLoginSubmit}
+                    <Button size="small"
+                    disabled={isSubmitDisable} onClick={this.handleLoginSubmit}
                     type="button">
-                        <GroupAddIcon />
                         Register</Button>
                 </div>
-                {formateError && <p>{message}</p>}
-                {success && <p>{`${successMessage}. User unique-id is ${uniqueId}`}</p>}
-               <Typography aligncenter="center" align="center" justify="center" component="div">
-               <Link to="/login">
-                    <AccountTreeIcon />
-                    Already have an account</Link>
-                    </Typography>
 
-        </form>    
-        </Grid>
-        </Grid>
-        </CardContent>
-            </Card>
+                {formateError && <Message color="red">{message}</Message>}
+                {success && <p>{`${successMessage}. User unique-id is ${uniqueId}`}</p>}
+               <div>
+               <Link to="/login"> Already have an account</Link> </div>
+
+        </Form>
+        </Segment>
+        </Grid.Column>
+            </Grid>
        </Container>
             </main>
         )

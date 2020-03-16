@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import {
   Switch,
   Route,
-  Link,
-  useRouteMatch,
+  Link,useParams,
+  useRouteMatch
 } from 'react-router-dom';
 import { Container,Icon,Menu,Sidebar} from 'semantic-ui-react';
 import Header from './Header';
 import Home from './Home';
+import UserList from './UserList';
 
 export default () => {
   const [visible, setVisible] = useState(false);
@@ -40,6 +41,18 @@ export default () => {
   )
 };
 
+const Test = (props) => {
+  const {params} = useParams();
+  console.log('Test params',params);
+  if(useParams === 'userlist'){
+    console.log('useParams',useParams
+    )
+    return <UserList />;
+  }
+  return <div>
+        </div>
+}
+
 const Content = (props) => {
   const { toggleSideBarMenu } = props;
   let match = useRouteMatch();
@@ -58,10 +71,10 @@ console.log('match',match);
       
       <Container>
       <Switch>
-        <Route path={`${match.path}/:topicId`}>
-          <h2>Choose the right one</h2>
+        <Route path={`${match.path}/:params`}>
+          <Test />
         </Route>
-        
+
         <Route path={match.path}>
           <Home />
         </Route>

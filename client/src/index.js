@@ -7,6 +7,7 @@ import * as serviceWorker from './serviceWorker';
 import store from './store';
 import { Provider } from 'react-redux';
 import 'semantic-ui-css/semantic.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 ReactDOM.render(<Provider store={store}>
     <BrowserRouter>

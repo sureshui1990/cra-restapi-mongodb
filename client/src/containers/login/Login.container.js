@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { LoginUrl } from "../../constants";
 import { LOGIN } from "../../actions/User";
+import { DOASTER_SUCCESS,DOASTER_ERROR } from "../../actions/Toaster";
+import { toast } from 'react-toastify';
 
 class LoginContainer extends Component {
   constructor(props) {
@@ -26,13 +28,16 @@ class LoginContainer extends Component {
     const reqBody = { email, password };
     axios.post(LoginUrl, reqBody).then(
       response => {
-        this.setState({ success: response }, () => {
+        this.setState({ success: response }, ( () => {
           this.userLogin(response.data["auth-token"]);
           login(response.data);
-        });
+          this.props.doasterSuccess(response.data.message);
+        })
+        );
       },
       error => {
-        this.setState({ error: error.response.data });
+        let errMessage = error.response.data;
+        this.setState({ error: errMessage },(()=>this.props.doasterError(errMessage.message)));
       }
     );
   };
@@ -108,7 +113,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    login: data => dispatch(LOGIN(data))
+    login: data => dispatch(LOGIN(data)),
+    doasterSuccess : msg => dispatch(DOASTER_SUCCESS(msg)),
+    doasterError : msg => dispatch(DOASTER_ERROR(msg))
   };
 };
 
